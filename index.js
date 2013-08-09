@@ -50,8 +50,8 @@ program
     dir = path.join(cwd, dir || 'phonegap');
     var url = 'http://' + options.domain + ':' + options.port + '/';
     var appPath = 'derby/lib-app-index.js';
-    request(url).pipe(parse(dir));
-    request(url + appPath).pipe(fs.createWriteStream(path.join(dir, 'www', appPath)));
+    request(url + '?phonegap=1').pipe(parse(dir));
+    request(url + appPath + '?phonegap=1').pipe(fs.createWriteStream(path.join(dir, 'www', appPath)));
   });
 
 program.parse(process.argv);
