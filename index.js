@@ -45,7 +45,6 @@ program
   .command('build [dir]')
   .description('Builds phonegap application from a running derby server.')
   .option('-d, --domain <domain>', 'specify the domain [localhost]', String, 'localhost')
-  .option('-e, --env <environment>', 'specify the environment [production]', String, 'production')
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
   .action(function (dir, options) {
     dir = path.join(cwd, dir || 'phonegap');
