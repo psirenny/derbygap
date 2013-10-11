@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
-var derby = require('derby')
-  , fs = require('fs')
+var fs = require('fs')
   , mkdirp = require('mkdirp')
-  , parse = require('./parse')
   , path = require('path')
   , phonegap = require('phonegap')
   , program = require('commander')
   , remove = require('remove')
+  , replace = require('replace')
   , request = require('request')
   , string = require('string');
 
@@ -47,11 +46,21 @@ program
   .option('-d, --domain <domain>', 'specify the domain [localhost]', String, 'localhost')
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
   .action(function (dir, options) {
-    dir = path.join(cwd, dir || 'phonegap');
+    dir = path.join(cwd, dir || 'phonegap', 'www');
     var url = 'http://' + options.domain + ':' + options.port + '/';
+    var file = path.join(dir, 'index.html');
     var appPath = 'derby/lib-app-index.js';
-    request(url + '?phonegap=1').pipe(parse(dir));
-    request(url + appPath + '?phonegap=1').pipe(fs.createWriteStream(path.join(dir, 'www', appPath)));
+    var appFile = path.join(dir, appPath);
+
+    request(url).pipe(fs.createWriteStream(file)).on('finish', function () {
+      replace({paths: [file], regex: '/derby/', replacement: 'derby/'});
+      fs.appendFile(file, '<script src="phonegap.js"></script>');
+    });
+
+    request(url + appPath).pipe(fs.createWriteStream(appFile)).on('finish', function () {
+      replace({paths: [appFile], regex: '//www', replacement: 'http://www'})
+      replace({paths: [appFile], regex: "'/channel'", replacement: "'" + url + "channel'"});
+    });
   });
 
 program.parse(process.argv);
