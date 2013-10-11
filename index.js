@@ -37,6 +37,7 @@ program
       fs.mkdirSync(path.join(dir, 'www/derby'));
       mkdirp.sync(path.join(cwd, 'public/shared'));
       fs.symlinkSync(path.join(cwd, 'public/shared'), path.join(dir, 'www/shared'), 'dir');
+      replace({paths: [path.join(dir, 'www/config.xml')], regex: '<access', replacement: '<access origin="http://www.google.com" />\n\t<access origin="http://localhost:3000" role="server" />\n\t<access'});
     });
   });
 
@@ -52,8 +53,15 @@ program
     var appPath = 'derby/lib-app-index.js';
     var appFile = path.join(dir, appPath);
 
+    replace({
+      paths: [path.join(dir, 'config.xml')],
+      regex: '<access origin=".+" role="server" />',
+      replacement: '<access origin="' + url + '" role="server" />'
+    });
+
     request(url).pipe(fs.createWriteStream(file)).on('finish', function () {
-      replace({paths: [file], regex: '/derby/', replacement: 'derby/'});
+      replace({paths: [file], regex: '/derby', replacement: 'derby'});
+      replace({paths: [file], regex: '/shared', replacement: 'shared'});
       fs.appendFile(file, '<script src="phonegap.js"></script>');
     });
 
