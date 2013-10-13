@@ -27,11 +27,7 @@ exports.build = function (options) {
 
   // ensure the server is on the domain whitelist
   // so that the browserchannel connection isn't rejected
-  replace({
-    paths: [path.join(dir, 'www/config.xml')],
-    regex: '<access origin=".+" role="server" />',
-    replacement: '<access origin="' + url + '" role="server" />'
-  });
+  replace({paths: [path.join(dir, 'www/config.xml')], regex: '<access origin=".+" role="server" />', replacement: '<access origin="' + url + '" role="server" />'});
 
   // "http://domain:port/index.html" -> "phonegap/www/index.html"
   request(url).pipe(fs.createWriteStream(file)).on('finish', function () {
@@ -54,26 +50,28 @@ exports.build = function (options) {
 
 exports.init = function (options) {
   options = _.defaults(options || {}, {
-    cwd: process.cwd(),
-    dir: 'phonegap',
-    domain: 'localhost',
-    port: 3000
+    cwd: process.cwd(), dir: 'phonegap'
   });
 
   var dir = path.resolve(options.cwd, options.chdir || '');
-  options.name = options.name || require(path.join(dir, 'package.json')).name;
-  options.id = options.id || 'com.phonegap.' + string(options.name).dasherize().chompLeft('-');
+
+  if (!options.name) {
+    // use the app name in the project's package.json file
+    options.name = require(path.join(dir, 'package.json')).name;
+  }
+
+  if (!options.id) {
+    options.id = 'com.phonegap.' + string(options.name).dasherize().chompLeft('-');
+  }
+
   dir = path.join(dir, options.dir);
 
   phonegap.create({id: options.id, name: options.name, path: dir}, function () {
-    // remove unused folders
     remove.removeSync(path.join(dir, 'www/css'));
     remove.removeSync(path.join(dir, 'www/img'));
     remove.removeSync(path.join(dir, 'www/index.html'));
     remove.removeSync(path.join(dir, 'www/js'));
-
-    // create a folder that will hold "lib-app-index.js"
-    fs.mkdirSync(path.join(dir, 'www/derby'));
+    fs.mkdirSync(path.join(dir, 'www/derby')); // folder for "lib-app-index.js"
 
     // create a shared static folder between the web app and the phonegap app
     mkdirp.sync(path.join(options.cwd, 'public/shared'));
