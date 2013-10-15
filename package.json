@@ -1,4 +1,11 @@
 {
+  "author": "psirenny",
+  "bin": {
+    "derbygap": "index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/psirenny/derbygap/issues"
+  },
   "dependencies": {
     "commander": "*",
     "lodash": "*",
@@ -9,27 +16,22 @@
     "request": "*",
     "string": "*"
   },
-  "name": "derbygap",
-  "version": "0.1.1",
   "description": "A tool to help setup a phonegap project with DerbyJS ",
-  "main": "index.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/psirenny/derbygap.git"
-  },
+  "gitHead": "a2dc32b5a141b32e92ccf1418a756771a65fccf0",
   "keywords": [
     "derby",
     "phonegap"
   ],
-  "author": "psirenny",
   "license": "MIT",
-  "gitHead": "a2dc32b5a141b32e92ccf1418a756771a65fccf0",
+  "main": "index.js",
+  "name": "derbygap",
   "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/psirenny/derbygap/issues"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psirenny/derbygap.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.1"
 }
