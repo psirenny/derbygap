@@ -27,36 +27,44 @@ exports.build = function (options) {
 
   // ensure the server is on the domain whitelist
   // so that the browserchannel connection isn't rejected
-  replace({paths: [path.join(dir, 'www/config.xml')], regex: '<access origin=".+" role="server" />', replacement: '<access origin="' + url + '" role="server" />'});
+  replace({
+    paths: [path.join(dir, 'www/config.xml')],
+    regex: '<access origin=".+" role="server" />',
+    replacement: '<access origin="' + url + '" role="server" />'
+  });
 
   // "http://domain:port/index.html" -> "phonegap/www/index.html"
-  request(url).pipe(fs.createWriteStream(file)).on('finish', function () {
-    // ensure script src to "derby/lib-app-index.js" is a relative url
-    replace({paths: [file], regex: '/derby', replacement: 'derby'});
-
-    // include "phonegap.js" script at end of file
-    fs.appendFile(file, '<script src="phonegap.js"></script>');
-  });
+  request({headers: {phonegap: true}, url: url})
+    .pipe(fs.createWriteStream(file))
+    .on('finish', function () {
+      // ensure script src to "derby/lib-app-index.js" is a relative url
+      replace({paths: [file], regex: '/derby', replacement: 'derby'});
+      // include "phonegap.js" script at end of file
+      fs.appendFile(file, '<script src="phonegap.js"></script>');
+    }
+  );
 
   // "http://domain:port/derby/lib-app-index.js" -> "phonegap/www/derby/lib-app-index.js"
-  request(url + appPath).pipe(fs.createWriteStream(appFile)).on('finish', function () {
-    // specify the "http://" protocol because phonegap defaults to "file://"
-    replace({paths: [appFile], regex: '//www', replacement: 'http://www'});
-
-    // specify absolute url to server's browserchannel since it is not running on the device
-    replace({paths: [appFile], regex: "'/channel'", replacement: "'" + url + "channel'"});
-  });
+  request({headers: {phonegap: true}, url: url + appPath})
+    .pipe(fs.createWriteStream(appFile))
+    .on('finish', function () {
+      // specify the "http://" protocol because phonegap defaults to "file://"
+      replace({paths: [appFile], regex: '//www', replacement: 'http://www'});
+      // specify absolute url to server's browserchannel since it is not running on the device
+      replace({paths: [appFile], regex: "'/channel'", replacement: "'" + url + "channel'"});
+    }
+  );
 };
 
 exports.init = function (options) {
   options = _.defaults(options || {}, {
-    cwd: process.cwd(), dir: 'phonegap'
+    cwd: process.cwd(),
+    dir: 'phonegap'
   });
 
   var dir = path.resolve(options.cwd, options.chdir || '');
 
   if (!options.name) {
-    // use the app name in the project's package.json file
     options.name = require(path.join(dir, 'package.json')).name;
   }
 
@@ -71,7 +79,7 @@ exports.init = function (options) {
     remove.removeSync(path.join(dir, 'www/img'));
     remove.removeSync(path.join(dir, 'www/index.html'));
     remove.removeSync(path.join(dir, 'www/js'));
-    fs.mkdirSync(path.join(dir, 'www/derby')); // folder for "lib-app-index.js"
+    fs.mkdirSync(path.join(dir, 'www/derby'));
 
     // create a shared static folder between the web app and the phonegap app
     mkdirp.sync(path.join(options.cwd, 'public/shared'));
