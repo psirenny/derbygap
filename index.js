@@ -20,7 +20,7 @@ exports.build = function (options) {
   });
 
   var dir = path.resolve(options.cwd, options.chdir || '', options.dir)
-    , url = 'http://' + options.domain + ':' + options.port + '/'
+    , url = 'http://' + options.domain + ':' + options.port
     , file = path.join(dir, 'www/index.html')
     , appPath = 'derby/lib-app-index.js'
     , appFile = path.join(dir, 'www', appPath);
@@ -39,19 +39,21 @@ exports.build = function (options) {
     .on('finish', function () {
       // ensure script src to "derby/lib-app-index.js" is a relative url
       replace({paths: [file], regex: '/derby', replacement: 'derby'});
+      // do not assume the app is connected
+      replace({paths: [file], regex: '"state": "connected"', replacement: ''});
       // include "phonegap.js" script at end of file
       fs.appendFile(file, '<script src="phonegap.js"></script>');
     }
   );
 
   // "http://domain:port/derby/lib-app-index.js" -> "phonegap/www/derby/lib-app-index.js"
-  request({headers: {phonegap: true}, url: url + appPath})
+  request({headers: {phonegap: true}, url: url + '/' + appPath})
     .pipe(fs.createWriteStream(appFile))
     .on('finish', function () {
       // specify the "http://" protocol because phonegap defaults to "file://"
       replace({paths: [appFile], regex: '//www', replacement: 'http://www'});
       // specify absolute url to server's browserchannel since it is not running on the device
-      replace({paths: [appFile], regex: "'/channel'", replacement: "'" + url + "channel'"});
+      replace({paths: [appFile], regex: "'/channel'", replacement: "'" + url + "/channel'"});
     }
   );
 };
