@@ -54,6 +54,8 @@ exports.build = function (options) {
       replace({paths: [appFile], regex: '//www', replacement: 'http://www'});
       // specify absolute url to server's browserchannel since it is not running on the device
       replace({paths: [appFile], regex: "'/channel'", replacement: "'" + url + "/channel'"});
+      // remove filepath from window.location.pathname
+      replace({paths: [appPath], regex: 'window.location.pathname', replacement: "(window.location.pathname.slice(window.location.pathname.indexOf('index.html') + 10) + '/')"});
     }
   );
 };
