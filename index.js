@@ -39,6 +39,8 @@ exports.build = function (options) {
     .on('finish', function () {
       // ensure script src to "derby/lib-app-index.js" is a relative url
       replace({paths: [file], regex: '/derby', replacement: 'derby'});
+      // ensure script src to shared folder is a relative url
+      replace({paths: [file], regex: '/shared', replacement: 'shared'});
       // do not assume the app is connected
       replace({paths: [file], regex: '"state": "connected"', replacement: ''});
       // include "phonegap.js" script at end of file
