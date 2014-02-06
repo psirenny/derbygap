@@ -1,7 +1,7 @@
 {
-  "author": "psirenny",
+  "author": "psirenny <djtorres0@gmail.com>",
   "bin": {
-    "derbygap": "index.js"
+    "derbygap": "cli.js"
   },
   "bugs": {
     "url": "https://github.com/psirenny/derbygap/issues"
@@ -16,7 +16,7 @@
     "request": "*",
     "string": "*"
   },
-  "description": "A tool to help setup a phonegap project with DerbyJS ",
+  "description": "A tool to help setup a phonegap project with DerbyJS.",
   "gitHead": "a2dc32b5a141b32e92ccf1418a756771a65fccf0",
   "keywords": [
     "derby",
@@ -33,5 +33,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.2.5"
+  "version": "0.2.6"
 }
