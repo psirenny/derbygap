@@ -1,0 +1,7 @@
+<script>
+  document.addEventListener('deviceready', function () {
+    if (!DERBY) return window.phonegap = true;
+    DERBY.app.model.set('$phonegap.ready', true);
+  }, false);
+</script>
+<script src="phonegap.js"></script>
