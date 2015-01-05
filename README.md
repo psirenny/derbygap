@@ -11,14 +11,15 @@ Installation
 Client Usage
 ------------
 
-Creating a derbygap app is similar to creating a standard derby app.  
+Creating a derbygap app is similar to creating a standard derby app.
+
 In addition to creating the app's script bundle, you must also create
 the app's html by calling `derbygap.writeHtml`:
 
 This example assumes you have initialized a phonegap app (named phonegap)
 in the root of your project.  
 
-Create and run the following file:
+devices.js:
 
     var derbyApp = require('…');
     var expressApp = require('…');
@@ -40,15 +41,15 @@ Create and run the following file:
       });
     });
 
-Derbygap generates the html by making a request to the running app.  
-You may change the url that derbygap makes the request to.
-Ensure that the route handling the url does not have redirects and DOES NOT render differently for different requests. For instance, it should not setup and return a unique user id per request. Any redirect logic on the route should be run client side only.
+Derbygap generates your app html by making a request to the running app.
+
+Ensure that the route handling the url derbygap requests does NOT have redirects and does NOT render differently based on session information. Any redirect logic on the route should be run client side only.
 
 Server Usage (optional)
 -----------------------
 
 You may optionally include the derbygap middleware in your express app
-to add `phonegap` data to your model.
+to add `$phonegap` data to your model.
 
     var derbygap = require('derbygap');
 
@@ -63,15 +64,17 @@ Middleware
 
 Adds the following model data:
 
-    **$phonegap.baseUrl** - Blank if phonegap is enabled and `"\"` otherwise.
+**$phonegap.baseUrl** - Blank if phonegap is enabled and `"\"` otherwise.
 
-    **$phonegap.enabled** - `True` if phonegap is enabled.
+**$phonegap.enabled** - `True` if phonegap is enabled.
 
 Options:
 
-    **enabled** - Manually enable/disable this middleware by setting this to something truthy/falsy.
-    **env** - Environment variable that will enable this middleware. Defaults to `PHONEGAP`.
-    **reqHeader** - Request header that will enable this middleware. Defaults to `X-PHONEGAP`.
+**enabled** - Manually enable/disable this middleware by setting this to something truthy/falsy.
+
+**env** - Environment variable that will enable this middleware. Defaults to `PHONEGAP`.
+
+**reqHeader** - Request header that will enable this middleware. Defaults to `X-PHONEGAP`.
 
 Notes
 -----
