@@ -64,17 +64,17 @@ Middleware
 
 Adds the following model data:
 
-**$phonegap.baseUrl** - Blank if phonegap is enabled and `"\"` otherwise.
+`$phonegap.baseUrl` - Blank if phonegap is enabled and `"\"` otherwise.
 
-**$phonegap.enabled** - `True` if phonegap is enabled.
+`$phonegap.enabled` - `True` if phonegap is enabled.
 
 Options:
 
-**enabled** - Manually enable/disable this middleware by setting this to something truthy/falsy.
+**enabled** - Manually enable/disable the middleware.
 
-**env** - Environment variable that will enable this middleware. Defaults to `PHONEGAP`.
+**env** - Environment variable that will enable the middleware. Defaults to `PHONEGAP`.
 
-**reqHeader** - Request header that will enable this middleware. Defaults to `X-PHONEGAP`.
+**reqHeader** - Request header that will enable the middleware. Defaults to `X-PHONEGAP`.
 
 Notes
 -----
