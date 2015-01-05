@@ -64,7 +64,7 @@ Middleware
 
 Adds the following model data:
 
-`$phonegap.baseUrl` - Blank if phonegap is enabled and `"\"` otherwise.
+`$phonegap.baseUrl` - Blank if phonegap is enabled and `"/"` otherwise.
 
 `$phonegap.enabled` - `True` if phonegap is enabled.
 
