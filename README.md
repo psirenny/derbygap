@@ -19,7 +19,7 @@ the app's html by calling `derbygap.writeHtml`:
 This example assumes you have initialized a phonegap app (named phonegap)
 in the root of your project.  
 
-devices.js:
+device.js:
 
     var derbyApp = require('…');
     var expressApp = require('…');
