@@ -1,24 +1,19 @@
 {
-  "author": "psirenny <djtorres0@gmail.com>",
-  "bin": {
-    "derbygap": "cli.js"
-  },
+  "author": "Dennis Torres <djtorres0@gmail.com>",
   "bugs": {
     "url": "https://github.com/psirenny/derbygap/issues"
   },
   "dependencies": {
-    "commander": "*",
-    "lodash": "*",
-    "mkdirp": "*",
-    "phonegap": "*",
-    "remove": "*",
-    "replace": "*",
-    "request": "*",
-    "string": "*"
+    "derby": "^0.6.0-alpha31",
+    "locationify": "^1.0.1",
+    "replacestream": "^1.0.2",
+    "superagent": "^0.21.0",
+    "through2": "^0.6.3"
   },
   "description": "A tool to help setup a phonegap project with DerbyJS.",
   "gitHead": "a2dc32b5a141b32e92ccf1418a756771a65fccf0",
   "keywords": [
+    "cordova",
     "derby",
     "phonegap"
   ],
@@ -33,5 +28,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.2.7"
+  "version": "1.0.0"
 }
