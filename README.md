@@ -29,14 +29,14 @@ The following example assumes the following:
 
     derby.run(function () {
       var dir = path.join(__dirname, 'phonegap/www');
-      var localUrl = 'http://localhost:3000/phonegap';
+      var sourceUrl = 'http://localhost:3000/phonegap';
       var opts = {serverUrl: 'http://foo.bar.com'};
       expressApp.listen(3000);
 
       // will write your app bundle to "phonegap/www/derby/….js"
       derbygap.writeScripts(derbyApp, store, dir, opts, function () {
         // will write your app html to "phonegap/www/index.html"
-        derbygap.writeHtml(dir, localUrl);
+        derbygap.writeHtml(dir, sourceUrl);
       });
     });
 
