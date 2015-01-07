@@ -17,8 +17,8 @@ In addition to creating the app's script bundle, you must also create
 the app's html by calling `derbygap.writeHtml`.
 
 The following example assumes the following:
-- You have initialized a phonegap project named **phonegap**.
-- You have a route **/phonegap**.
+1. You have initialized a phonegap project named **phonegap**.
+2. You have a route **/phonegap**.
 
     var derbyApp = require('…');
     var expressApp = require('…');
