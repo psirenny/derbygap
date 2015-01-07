@@ -16,8 +16,9 @@ Creating a derbygap app is similar to creating a standard derby app.
 In addition to creating the app's script bundle, you must also create
 the app's html by calling `derbygap.writeHtml`.
 
-This example assumes you have initialized a phonegap project, named **phonegap**,
-in the root of your project:
+The following example assumes the following:
+- You have initialized a phonegap project named **phonegap**.
+- You have a route **/phonegap**.
 
     var derbyApp = require('…');
     var expressApp = require('…');
