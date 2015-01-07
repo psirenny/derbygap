@@ -16,7 +16,7 @@ exports.middleware = function (options) {
     var model = req.getModel();
     if (enabled == null) enabled = process.env[options.env] || req.get(options.reqHeader);
     model.set('$phonegap.baseUrl', enabled ? '' : '/');
-    model.set('$phonegap.enabled', enabled);
+    model.set('$phonegap.enabled', !!enabled);
     next();
   };
 };
@@ -43,13 +43,11 @@ exports.writeScripts = function (app, store, dir, options, cb) {
     // to the server rather than the local filesystem.
     bundle.transform({global: true}, locationify(options.serverUrl));
 
-    // Convert absolute urls to relative urls so that
-    // phonegap does not prepend "file://..." junk to the
-    // beginning of those urls.
     bundle.transform({global: true}, function (file) {
       return through(function (buf, enc, next) {
         var code = buf.toString('utf8');
         code = code.replace('"/derby/', '"derby/');
+        code = code.replace('window.location = window.location;', '');
         this.push(code);
         next();
       });

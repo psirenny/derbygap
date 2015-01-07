@@ -19,7 +19,7 @@ the app's html by calling `derbygap.writeHtml`:
 This example assumes you have initialized a phonegap app (named phonegap)
 in the root of your project.  
 
-device.js:
+In your app init:
 
     var derbyApp = require('…');
     var expressApp = require('…');
@@ -45,8 +45,17 @@ Derbygap generates your app html by making a request to the running app.
 
 Ensure that the route handling the url derbygap requests does NOT have redirects and does NOT render differently based on session information. Any redirect logic on the route should be run client side only.
 
-Server Usage (optional)
------------------------
+In your view:
+
+    <Head:>
+      {{if $phonegap.enabled}}
+      <script src="cordova.js"></script>
+      {{/}}
+      <base href="{{$phonegap.baseUrl}}">
+      <script src="some/other/file.js"></script>  
+
+Server Usage
+------------
 
 You may optionally include the derbygap middleware in your express app
 to add `$phonegap` data to your model.
