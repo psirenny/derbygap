@@ -14,12 +14,10 @@ Client Usage
 Creating a derbygap app is similar to creating a standard derby app.
 
 In addition to creating the app's script bundle, you must also create
-the app's html by calling `derbygap.writeHtml`:
+the app's html by calling `derbygap.writeHtml`.
 
-This example assumes you have initialized a phonegap app (named phonegap)
-in the root of your project.  
-
-In your app init:
+This example assumes you have initialized a phonegap project, named **phonegap**,
+in the root of your project:
 
     var derbyApp = require('…');
     var expressApp = require('…');
@@ -45,7 +43,7 @@ Derbygap generates your app html by making a request to the running app.
 
 Ensure that the route handling the url derbygap requests does NOT have redirects and does NOT render differently based on session information. Any redirect logic on the route should be run client side only.
 
-In your view:
+Make sure to include *cordova.js*:
 
     <Head:>
       {{if $phonegap.enabled}}
