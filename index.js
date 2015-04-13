@@ -1,10 +1,10 @@
 var derby = require('derby');
 var fs = require('fs');
-var locationify = require('locationify');
 var path = require('path');
 var replace = require('replacestream');
 var request = require('superagent');
 var through = require('through2');
+var tracksPathQuery = path.join(require.resolve('tracks-path-query'), '../..');
 
 exports.middleware = function (options) {
   if (!options) options = {};
@@ -35,19 +35,15 @@ exports.writeHtml = function (dir, url, callback) {
     .on('finish', callback);
 };
 
-// Code adapted from "derby/lib/App.sever.js"
 exports.writeScripts = function (app, store, dir, options, cb) {
   store.on('bundle', function (bundle) {
-    // Replace window.location.hostname, window.location.origin, etc...
-    // with the server url so that the phonegap app will connect
-    // to the server rather than the local filesystem.
-    bundle.transform({global: true}, locationify(options.serverUrl));
+    // make tracks (routing) compatible with the file:// protocol
+    bundle.require(tracksPathQuery, {expose: 'tracks'});
 
-    bundle.transform({global: true}, function (file) {
+    bundle.transform(function (file) {
       return through(function (buf, enc, next) {
         var code = buf.toString('utf8');
         code = code.replace('"/derby/', '"derby/');
-        code = code.replace('window.location = window.location;', '');
         this.push(code);
         next();
       });

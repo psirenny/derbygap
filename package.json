@@ -5,13 +5,12 @@
   },
   "dependencies": {
     "derby": "^0.6.0-alpha31",
-    "locationify": "^1.0.1",
     "replacestream": "^1.0.2",
     "superagent": "^1.1.0",
-    "through2": "^0.6.3"
+    "through2": "^0.6.3",
+    "tracks-path-query": "^0.5.6"
   },
   "description": "A tool to help setup a phonegap project with DerbyJS.",
-  "gitHead": "a2dc32b5a141b32e92ccf1418a756771a65fccf0",
   "keywords": [
     "cordova",
     "derby",
@@ -28,5 +27,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.2"
+  "version": "2.0.0"
 }
