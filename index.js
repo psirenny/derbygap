@@ -44,6 +44,7 @@ exports.writeScripts = function (app, store, dir, options, cb) {
       return through(function (buf, enc, next) {
         var code = buf.toString('utf8');
         code = code.replace('"/derby/', '"derby/');
+        code = code.replace('App.prototype._autoRefresh = function() {', 'App.prototype._autoRefresh = function() {return;');
         this.push(code);
         next();
       });
@@ -75,7 +76,7 @@ exports.writeScripts = function (app, store, dir, options, cb) {
     // be race conditions with multiple processes intentionally running
     // different versions of the app in parallel out of the same directory,
     // such as during a rolling restart.
-    if (!derby.util.isProduction) {
+    if (false && !derby.util.isProduction) {
       var filenames = fs.readdirSync(dir);
       for (var i = 0; i < filenames.length; i++) {
         var item = filenames[i].split(/[-.]/);
