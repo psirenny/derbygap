@@ -1,3 +1,5 @@
+'use strict';
+
 var derby = require('derby');
 var fs = require('fs');
 var path = require('path');
@@ -14,6 +16,7 @@ exports.middleware = function (options) {
   return function(req, res, next) {
     var enabled = options.enabled;
     var model = req.getModel();
+    if (!model) return next();
     if (enabled == null) enabled = process.env[options.env] || req.get(options.reqHeader);
     model.set('$phonegap.baseUrl', enabled ? '' : '/');
     model.set('$phonegap.enabled', !!enabled);
